@@ -13,20 +13,18 @@ const ITEMS = {
 }
 
 function consertTicketUpdater(consertTicket) {
-  if (consertTicket.quality < 50) {
-    consertTicket.quality = consertTicket.quality + 1;
 
-    if (consertTicket.sellIn < 11) {
-      if (consertTicket.quality < 50) {
-        consertTicket.quality = consertTicket.quality + 1;
-      }
-    }
-    if (consertTicket.sellIn < 6) {
-      if (consertTicket.quality < 50) {
-        consertTicket.quality = consertTicket.quality + 1;
-      }
-    }
+  consertTicket.quality = consertTicket.quality + 1;
+
+  if (consertTicket.sellIn < 11) {
+    consertTicket.quality = consertTicket.quality + 1;
   }
+  
+  if (consertTicket.sellIn < 6) {
+    consertTicket.quality = consertTicket.quality + 1;
+  }
+
+  if (consertTicket.quality > 50 ) consertTicket.quality = 50;
 
   consertTicket.sellIn = consertTicket.sellIn - 1;
 
