@@ -114,9 +114,31 @@ describe("Gilded Rose", function() {
     });
   });
 
-  // describe("Conjured Item", function () {
-    
-  // });
+  describe("Conjured Item", function () {
+    const originalSellIn = 5;
+    const originalQuality = 40;
+    const itemName = "Conjured Mana Cake";
+
+    const gildedRose = createShopWithOneItem(new Item(itemName, originalSellIn, originalQuality));
+
+    it("should decrease in quality twice as fast every passing day", function() {
+      const items = simulateDaysPassing(gildedRose, originalSellIn);
+
+      expect(items[0].quality).toEqual(originalQuality - (originalSellIn * 2));
+    });
+
+    it("should decrease in quality four times as fast after sell-in date passes", function() {
+      const items = simulateDaysPassing(gildedRose, 5);
+
+      expect(items[0].quality).toEqual(10);
+    });
+
+    it("should NOT decrease quality bellow 0", function() {
+      const items = simulateDaysPassing(gildedRose, 10);
+
+      expect(items[0].quality).toEqual(0);
+    });
+  });
 });
 
 function simulateDaysPassing(shop, days) {

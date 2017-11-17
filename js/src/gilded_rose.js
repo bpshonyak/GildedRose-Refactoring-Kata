@@ -10,6 +10,7 @@ const ITEMS = {
   Aged_Brie: 'Aged Brie',
   Consert_Ticket: 'Backstage passes to a TAFKAL80ETC concert',
   Sulfuras: 'Sulfuras, Hand of Ragnaros',
+  Conjured: 'Conjured Mana Cake'
 }
 
 function consertTicketUpdater(consertTicket) {
@@ -19,7 +20,7 @@ function consertTicketUpdater(consertTicket) {
   if (consertTicket.sellIn < 11) {
     consertTicket.quality = consertTicket.quality + 1;
   }
-  
+
   if (consertTicket.sellIn < 6) {
     consertTicket.quality = consertTicket.quality + 1;
   }
@@ -50,6 +51,17 @@ function sulfurasUpdater(sulfuras) {
   return sulfuras;
 }
 
+function conjuredUpdater(conjuredItem) {
+  var decreaseAmount = conjuredItem.sellIn < 1 ? 4 : 2;
+  conjuredItem.quality = conjuredItem.quality - decreaseAmount;
+
+  if (conjuredItem.quality < 0 ) conjuredItem.quality = 0;
+
+  conjuredItem.sellIn = conjuredItem.sellIn - 1;
+
+  return conjuredItem;
+}
+
 function defaultUpdater(defaultItem) {
   var decreaseAmount = defaultItem.sellIn < 1 ? 2 : 1;
   defaultItem.quality = defaultItem.quality - decreaseAmount;
@@ -77,6 +89,9 @@ class Shop {
           break;
         case ITEMS.Sulfuras:
           return sulfurasUpdater(item);
+          break;
+        case ITEMS.Conjured:
+          return conjuredUpdater(item);
           break;
         default:
           return defaultUpdater(item);
